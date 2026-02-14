@@ -18,13 +18,13 @@ using System.Windows.Shapes;
 
 namespace WindowsStoreCloneWPF.UserControls
 {
-    /// <summary>
-    /// Interaction logic for AnApp.xaml
-    /// </summary>
     public partial class AnApp : UserControl
     {
         public string AppName;
         public ImageSource AppImageSource;
+
+        public delegate void OnAppClicked(AnApp sender, RoutedEventArgs e);
+        public event OnAppClicked AppClicked;
 
         public AnApp()
         {
@@ -42,9 +42,18 @@ namespace WindowsStoreCloneWPF.UserControls
             AppImageSource = ProductImage.Source;
         }
 
+        public AnApp(string inAppName, ImageSource inImageSource)
+        {
+            InitializeComponent();
+            ProductImage.Source = inImageSource;
+            AppNameText.Text = inAppName;
+            AppName = inAppName;
+            AppImageSource = inImageSource;
+        }
+
         private void ProductImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            AppClicked(this, e);
         }
     }
 }

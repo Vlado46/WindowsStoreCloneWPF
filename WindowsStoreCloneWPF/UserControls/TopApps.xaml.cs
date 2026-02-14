@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,12 @@ using System.Windows.Shapes;
 
 namespace WindowsStoreCloneWPF.UserControls
 {
-    /// <summary>
-    /// Interaction logic for TopApps.xaml
-    /// </summary>
     public partial class TopApps : UserControl
     {
+        public delegate void OnAppClicked(AnApp sender, RoutedEventArgs e);
+        public event OnAppClicked AppClicked;
+        public delegate void OnTopAppButtonClicked(object sender, RoutedEventArgs e);
+        public event OnTopAppButtonClicked TopAppButtonClicked;
         public TopApps()
         {
             InitializeComponent();
@@ -27,8 +29,15 @@ namespace WindowsStoreCloneWPF.UserControls
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            string appName = (new CultureInfo("en-US", false).TextInfo).ToTitleCase(
+                (sender as Image).Source.ToString().Split('/').Last()
+                .Split('-').Last().Split('.').First());
+            AppClicked(new AnApp(appName, (sender as Image).Source), e);
         }
 
+        private void TopAppsButton_Click(object sender, RoutedEventArgs e)
+        {
+            TopAppButtonClicked(sender, e);
+        }
     }
 }

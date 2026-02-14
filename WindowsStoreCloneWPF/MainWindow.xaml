@@ -13,6 +13,7 @@
                Loaded="MainWindowFrame_Loaded"
                NavigationUIVisibility="Hidden"
                Width="{Binding ElementName=MainWindowMetro, Path=ActualWidth}"
-               Height="{Binding ElementName=MainWindowMetro, Path=ActualHeight}" />
+               Height="{Binding ElementName=MainWindowMetro, Path=ActualHeight}" 
+               />
     </Grid>
 </Window>
